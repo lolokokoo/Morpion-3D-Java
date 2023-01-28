@@ -1,16 +1,17 @@
 import java.util.Scanner;
 public class Jeu2D {
 	private Grille2D grille;
-	Joueur joueur2 = new Joueur("O", "Joueur 1");
-	Joueur joueur1 = new Joueur("X", "Joueur 2");
-	Joueur currentplayer = joueur1;
+	Joueur joueur1 = new Joueur("X", "Joueur 1");
+	Joueur joueur2 = new Joueur("O", "Joueur 2");
+	Joueur currentplayer = joueur2;
 	
 	public Jeu2D(Grille2D grille) {
 		this.grille = grille;
 	}
 	
 	public void deroulementJeu2D() {
-		while (this.checkWin() == false && !this.estPlein()) {
+		//On continue de jouer tant que la grille est pas pleine ou que personne n'a gagné
+		while (this.checkWin() == false && !grille.estPlein()) {
 			this.demandePositionPion();
 			grille.afficherGrille2D();
 		}
@@ -26,16 +27,18 @@ public class Jeu2D {
 	    try {
 	        int position = scan.nextInt();
 	        try {
-	            placerPion(position);
+	            grille.placerPion(position, currentplayer);
 	        } catch (Exception e) {
+	        	grille.afficherGrille2D();
 	            System.out.println("La case est déjà utilisée ou invalide, veuillez réessayer.");
 	            demandePositionPion();
 	        }
 	    } catch (Exception e) {
+        	grille.afficherGrille2D();
 	        System.out.println("Veuillez entrer un entier s'il vous plaît.");
 	        scan.nextLine();
 	        demandePositionPion();
-	    }
+	    } 
 	}
 
 	
@@ -43,13 +46,21 @@ public class Jeu2D {
 		if(this.checkWinHoriz() || this.checkWinVert() || this.checkWinDiag()) {
 			return true;
 		}
-	    // changer de joueur
+	    // changer de joueur si personne ne gagne
 	    currentplayer = currentplayer == joueur1 ? joueur2 : joueur1;
 		return false;
 	}
 
 	private boolean checkWinDiag() {
-		// TODO Auto-generated method stub
+		int check = 0;
+		for (int indice = 0; indice < this.grille.getTaille(); indice++) {
+			if (currentplayer.getSymbole().equals(this.grille.getCase(indice, indice))) {
+                check++; // On compte combien de symboles à la suite il y a
+            }
+            if (check == this.grille.getTaille()) {
+                return true;
+            }
+		}
 		return false;
 	}
 
@@ -68,35 +79,18 @@ public class Jeu2D {
         return false;
     }
 
-
 	private boolean checkWinHoriz() {
-		// TODO Auto-generated method stub
-		return false;
+		for (int colonne = 0; colonne < this.grille.getTaille(); colonne++) {
+            int check = 0;
+            for (int ligne = 0; ligne < this.grille.getTaille(); ligne++) {
+                if (currentplayer.getSymbole().equals(this.grille.getCase(ligne, colonne))) {
+                    check++; // On compte combien de symboles à la suite il y a
+                }
+                if (check == this.grille.getTaille()) {
+                    return true;
+                }
+            }
+        }
+        return false;
 	}
-	public boolean estPlein() {
-	    int stock = 0;
-	    for (int ligne = 0; ligne < this.grille.getTaille(); ligne++) {
-	        for (int colonne = 0; colonne < this.grille.getTaille(); colonne++) {
-	            if (this.grille.getCase(ligne, colonne).equals(joueur1.getSymbole()) || this.grille.getCase(ligne, colonne).equals(joueur2.getSymbole())) {
-	                stock++;
-	            }
-	        }
-	    }
-	    return stock == this.grille.getTaille() * this.grille.getTaille();
-	}
-	
-	public void placerPion(int chiffre) {
-	    if (chiffre < 1 || chiffre > this.grille.getTaille() * this.grille.getTaille()) {
-	        throw new IllegalArgumentException("Le chiffre doit être compris entre 1 et " + this.grille.getTaille() * this.grille.getTaille());
-	    }
-	    int colonne = (chiffre - 1) / this.grille.getTaille();
-	    int ligne = (chiffre - 1) % this.grille.getTaille();	    
-	    if (!(this.grille.getCase(ligne, colonne).equals(Integer.toString(chiffre)))) {
-	        throw new IllegalArgumentException("La case " + chiffre + " est déjà occupée");
-	    }
-	    this.grille.setCase(ligne, colonne, currentplayer.getSymbole());
-	}
-	
-	
-	
 }

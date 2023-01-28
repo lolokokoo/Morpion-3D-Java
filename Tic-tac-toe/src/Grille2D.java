@@ -59,5 +59,29 @@ public class Grille2D {
 	    }
 	    mat[ligne][colonne] = symbole;
 	}
-
+	
+	public boolean estPlein() {
+	    int stock = 0;
+	    for (int ligne = 0; ligne < this.taille; ligne++) {
+	        for (int colonne = 0; colonne < this.taille; colonne++) {
+	            if (this.getCase(ligne, colonne).equals("X") || this.getCase(ligne, colonne).equals("O")) {
+	                stock++;
+	            }
+	        }
+	    }
+	    return stock == this.getTaille() * this.getTaille();
+	}
+	public void placerPion(int chiffre, Joueur currentplayer) {
+	    if (chiffre < 1 || chiffre > this.taille * this.taille) {
+	        throw new IllegalArgumentException("Le chiffre doit être compris entre 1 et " + this.taille * this.taille);
+	    }
+	    int colonne = (chiffre - 1) / this.taille;
+	    int ligne = (chiffre - 1) % this.taille;	    
+	    if (!(this.getCase(ligne, colonne).equals(Integer.toString(chiffre)))) {
+	        throw new IllegalArgumentException("La case " + chiffre + " est déjà occupée");
+	    }
+	    this.setCase(ligne, colonne, currentplayer.getSymbole());
+	}
+	
+	
 }
