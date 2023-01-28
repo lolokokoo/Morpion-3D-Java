@@ -1,4 +1,5 @@
-
+package deuxDimensions;
+import Jeu.Joueur;
 public class Grille2D {
 	private int taille;
 	private String[][] mat;

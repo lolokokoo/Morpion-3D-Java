@@ -1,3 +1,4 @@
+package Jeu;
 
 public class Joueur {
 	private String symbole;

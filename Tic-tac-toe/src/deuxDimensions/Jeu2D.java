@@ -1,4 +1,7 @@
+package deuxDimensions;
 import java.util.Scanner;
+import Jeu.Joueur;
+
 public class Jeu2D {
 	private Grille2D grille;
 	Joueur joueur1 = new Joueur("X", "Joueur 1");
