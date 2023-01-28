@@ -19,11 +19,11 @@ public class Grille2D {
 		this.mat = mat;
 	}
 	
-	public String getElemMat(int ligne, int colonne) {
-		if (ligne >= 0 && colonne >= 0 && ligne < this.taille && colonne < this.taille) {
-			return mat[ligne][colonne];
-		}
-		else return "indinces invalides";
+	public String getCase(int ligne, int colonne) {
+	    if (ligne < 0 || ligne >= this.taille || colonne < 0 || colonne >= this.taille) {
+	        throw new IllegalArgumentException("Les indices de ligne et colonne doivent être compris entre 0 et " + (this.taille - 1));
+	    }
+	    return this.mat[ligne][colonne];
 	}
 
 	public Grille2D (int taille) {
@@ -50,6 +50,14 @@ public class Grille2D {
 				System.out.print(" ");
 			}
 			System.out.println("|");
-		}
+		}	
 	}
+	
+	public void setCase(int ligne, int colonne, String symbole) {
+	    if (ligne < 0 || ligne >= this.taille || colonne < 0 || colonne >= this.taille) {
+	        throw new IllegalArgumentException("Les indices de ligne et colonne doivent être compris entre 0 et " + (this.taille - 1));
+	    }
+	    mat[ligne][colonne] = symbole;
+	}
+
 }
