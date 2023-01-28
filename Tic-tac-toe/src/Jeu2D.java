@@ -53,8 +53,19 @@ public class Jeu2D {
 
 	private boolean checkWinDiag() {
 		int check = 0;
+		//Diagonale haut-gauche to bas-droite
 		for (int indice = 0; indice < this.grille.getTaille(); indice++) {
 			if (currentplayer.getSymbole().equals(this.grille.getCase(indice, indice))) {
+                check++; // On compte combien de symboles à la suite il y a
+            }
+            if (check == this.grille.getTaille()) {
+                return true;
+            }
+		}
+		//Diagonale haut-droit to bas-gauche
+		check = 0;
+		for (int indice = 0; indice < this.grille.getTaille(); indice++) {
+			if (currentplayer.getSymbole().equals(this.grille.getCase(indice, this.grille.getTaille() - indice - 1))) {
                 check++; // On compte combien de symboles à la suite il y a
             }
             if (check == this.grille.getTaille()) {
