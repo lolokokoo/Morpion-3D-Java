@@ -1,8 +1,14 @@
-package deuxDimensions;
-import Jeu.Joueur;
-public class Grille2D {
+package Grille;
+import jeucommun.Joueur;
+public class Grille2D implements Grille{
 	private int taille;
 	private String[][] mat;
+	
+	public Grille2D (int taille) {
+		this.taille = taille;
+		this.mat = new String[this.taille][this.taille];
+		this.creerMatrice();		
+	}
 	
 	public int getTaille() {
 		return taille;
@@ -20,17 +26,13 @@ public class Grille2D {
 		this.mat = mat;
 	}
 	
-	public String getCase(int ligne, int colonne) {
+	public String getCase(int... coordinates) {
+		int ligne = coordinates[0];
+        int colonne = coordinates[1];
 	    if (ligne < 0 || ligne >= this.taille || colonne < 0 || colonne >= this.taille) {
 	        throw new IllegalArgumentException("Les indices de ligne et colonne doivent être compris entre 0 et " + (this.taille - 1));
 	    }
 	    return this.mat[ligne][colonne];
-	}
-
-	public Grille2D (int taille) {
-		this.taille = taille;
-		this.mat = new String[this.taille][this.taille];
-		this.creerMatrice();		
 	}
 	
 	private void creerMatrice() {
@@ -43,7 +45,7 @@ public class Grille2D {
 		}
 	}
 
-	public void afficherGrille2D() {
+	public void afficherGrille() {
 		for(int n = 0; n < this.taille; n++) {
 			System.out.print("| ");
 			for(int m = 0; m < this.taille; m++) {
@@ -54,7 +56,9 @@ public class Grille2D {
 		}	
 	}
 	
-	public void setCase(int ligne, int colonne, String symbole) {
+	public void setCase(String symbole, int... coordinates) {
+		int ligne = coordinates[0];
+        int colonne = coordinates[1];
 	    if (ligne < 0 || ligne >= this.taille || colonne < 0 || colonne >= this.taille) {
 	        throw new IllegalArgumentException("Les indices de ligne et colonne doivent être compris entre 0 et " + (this.taille - 1));
 	    }
@@ -81,7 +85,7 @@ public class Grille2D {
 	    if (!(this.getCase(ligne, colonne).equals(Integer.toString(chiffre)))) {
 	        throw new IllegalArgumentException("La case " + chiffre + " est déjà occupée");
 	    }
-	    this.setCase(ligne, colonne, currentplayer.getSymbole());
+	    this.setCase(currentplayer.getSymbole(), ligne, colonne);
 	}
 	
 	

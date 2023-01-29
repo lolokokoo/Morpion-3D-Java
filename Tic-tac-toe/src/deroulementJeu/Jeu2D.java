@@ -1,8 +1,9 @@
-package deuxDimensions;
+package deroulementJeu;
 import java.util.Scanner;
-import Jeu.Joueur;
+import Grille.Grille2D;
+import jeucommun.Joueur;
 
-public class Jeu2D {
+public class Jeu2D implements Jeu{
 	private Grille2D grille;
 	Joueur joueur1 = new Joueur("X", "Joueur 1");
 	Joueur joueur2 = new Joueur("O", "Joueur 2");
@@ -12,11 +13,11 @@ public class Jeu2D {
 		this.grille = grille;
 	}
 	
-	public void deroulementJeu2D() {
+	public void deroulementJeu() {
 		//On continue de jouer tant que la grille est pas pleine ou que personne n'a gagné
 		while (this.checkWin() == false && !grille.estPlein()) {
 			this.demandePositionPion();
-			grille.afficherGrille2D();
+			grille.afficherGrille();
 		}
 		String message = this.checkWin() ? "Bravo " + currentplayer.getUsername() : "La grille est pleine, égalité !";
 		System.out.println(message);
@@ -32,12 +33,12 @@ public class Jeu2D {
 	        try {
 	            grille.placerPion(position, currentplayer);
 	        } catch (Exception e) {
-	        	grille.afficherGrille2D();
+	        	grille.afficherGrille();
 	            System.out.println("La case est déjà utilisée ou invalide, veuillez réessayer.");
 	            demandePositionPion();
 	        }
 	    } catch (Exception e) {
-        	grille.afficherGrille2D();
+        	grille.afficherGrille();
 	        System.out.println("Veuillez entrer un entier s'il vous plaît.");
 	        scan.nextLine();
 	        demandePositionPion();

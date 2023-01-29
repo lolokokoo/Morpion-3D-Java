@@ -1,4 +1,4 @@
-package Jeu;
+package jeucommun;
 
 public class Joueur {
 	private String symbole;
