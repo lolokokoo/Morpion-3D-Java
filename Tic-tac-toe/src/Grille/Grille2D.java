@@ -1,5 +1,6 @@
 package Grille;
 import jeucommun.Joueur;
+
 public class Grille2D implements Grille{
 	private int taille;
 	private String[][] mat;
@@ -76,6 +77,7 @@ public class Grille2D implements Grille{
 	    }
 	    return stock == this.getTaille() * this.getTaille();
 	}
+	
 	public void placerPion(int chiffre, Joueur currentplayer) {
 	    if (chiffre < 1 || chiffre > this.taille * this.taille) {
 	        throw new IllegalArgumentException("Le chiffre doit être compris entre 1 et " + this.taille * this.taille);

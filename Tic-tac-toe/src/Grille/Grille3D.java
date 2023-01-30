@@ -1,7 +1,7 @@
 package Grille;
 import jeucommun.Joueur;
 
-public class Grille3D {
+public class Grille3D implements Grille{
     private int taille;
     private String[][][] cube;
 
@@ -37,13 +37,18 @@ public class Grille3D {
 	
 	public void afficherGrille() {
 		//On affiche les lettre correspondant aux num des grilles
-		System.out.print("  ");
+		int espace = 0;
+		while (espace < taille/2 -1) {
+			System.out.print(" ");
+			espace++;
+		}
+		System.out.print("      ");
 		for (int i = 0; i <taille; i++) {
 			char c = (char) (i + 'a');
 			String s = Character.toString(c);
 			System.out.print(s);
-			int espace = 0;
-			while (espace < taille*3 -1) {
+			espace = 0;
+			while (espace < taille*4) {
 				System.out.print(" ");
 				espace++;
 			}
@@ -51,14 +56,16 @@ public class Grille3D {
 		System.out.println("");
 		//On affiche les n grilles
 		for (int ligne = 0; ligne < taille; ligne++) {
-			System.out.print("| ");
+			
 			for (int profondeur = 0; profondeur < taille; profondeur++) {
+				System.out.print("|  ");
 				for (int colonne = 0; colonne < taille; colonne++) {
 					System.out.print(this.cube[ligne][colonne][profondeur]);	
-					System.out.print(" ");
+					System.out.print("  ");
 		    	}
-				System.out.print("| ");
+				System.out.print("|");
 	    	}
+			
 			System.out.println();
     	}
 	}
@@ -82,18 +89,34 @@ public class Grille3D {
 	    }
 	    cube[ligne][colonne][profondeur] = symbole;
 	}
-	public void placerPion(int chiffre, String lettre, Joueur currentplayer) {
-		
-	    int profondeur = lettre - 'a' + 1;
-	    if (chiffre < 1 || chiffre > this.taille * this.taille) {
-	        throw new IllegalArgumentException("Le chiffre doit être compris entre 1 et " + this.taille * this.taille);
+	
+	public void placerPion(int chiffre, String lettre, Joueur currentplayer) { 
+		char charVar = lettre.charAt(0);
+	    int profondeur = charVar - 'a' ; // profondeur = 0 si a, 1 si b, 2 si c ...
+	    if (chiffre < 1 || chiffre > this.taille * this.taille || profondeur < 0 || profondeur > this.taille - 1) {
+	        throw new IllegalArgumentException("Le chiffre doit être compris entre 1 et " + this.taille * this.taille + "Et la lettre doit être valide");
 	    }
-	    int colonne = (chiffre - 1) / this.taille;
-	    int ligne = (chiffre - 1) % this.taille;	    
-	    if (!(this.getCase(ligne, colonne).equals(Integer.toString(chiffre)))) {
+	    int ligne = (chiffre - 1) / this.taille;
+	    int colonne = (chiffre - 1) % this.taille;
+	    if (!(this.getCase(ligne, colonne, profondeur).equals(Integer.toString(chiffre)))) {
 	        throw new IllegalArgumentException("La case " + chiffre + " est déjà occupée");
 	    }
-	    this.setCase(currentplayer.getSymbole(), ligne, colonne);
+	    this.setCase(currentplayer.getSymbole(), ligne, colonne, profondeur);
+	}
+	
+	@Override
+	public boolean estPlein() {
+	    int stock = 0;
+	    for (int ligne = 0; ligne < this.taille; ligne++) {
+	        for (int colonne = 0; colonne < this.taille; colonne++) {
+	        	for (int profondeur = 0; profondeur < this.taille; profondeur++) {
+	        		if (this.getCase(ligne, colonne, profondeur).equals("X") || this.getCase(ligne, colonne, profondeur).equals("O")) {
+		                stock++;
+		            }
+	        	}
+	        }
+	    }
+	    return stock == this.getTaille() * this.getTaille() * this.getTaille();
 	}
 }
 

@@ -8,6 +8,7 @@ public class Jeu2D implements Jeu{
 	Joueur joueur1 = new Joueur("X", "Joueur 1");
 	Joueur joueur2 = new Joueur("O", "Joueur 2");
 	Joueur currentplayer = joueur2;
+    Scanner scan = new Scanner(System.in);
 	
 	public Jeu2D(Grille2D grille) {
 		this.grille = grille;
@@ -16,32 +17,33 @@ public class Jeu2D implements Jeu{
 	public void deroulementJeu() {
 		//On continue de jouer tant que la grille est pas pleine ou que personne n'a gagné
 		while (this.checkWin() == false && !grille.estPlein()) {
-			this.demandePositionPion();
 			grille.afficherGrille();
+			while (!this.demandePositionPion()) { //Si le pion est pas valide on redemande
+				this.demandePositionPion();
+			}
 		}
 		String message = this.checkWin() ? "Bravo " + currentplayer.getUsername() : "La grille est pleine, égalité !";
 		System.out.println(message);
 	}
 	
 	
-	public void demandePositionPion() {
-	    Scanner scan = new Scanner(System.in);
+	public boolean demandePositionPion() {
 	    System.out.println(currentplayer.getUsername() + ", où voulez-vous placer votre pion ? (entrez un numéro de case entre 1 et 9)");
 	    System.out.println("Votre symbole : " + currentplayer.getSymbole());
 	    try {
 	        int position = scan.nextInt();
 	        try {
 	            grille.placerPion(position, currentplayer);
+	            return true;
 	        } catch (Exception e) {
 	        	grille.afficherGrille();
 	            System.out.println("La case est déjà utilisée ou invalide, veuillez réessayer.");
-	            demandePositionPion();
+	            return false;
 	        }
 	    } catch (Exception e) {
         	grille.afficherGrille();
 	        System.out.println("Veuillez entrer un entier s'il vous plaît.");
-	        scan.nextLine();
-	        demandePositionPion();
+	        return false;
 	    } 
 	}
 
