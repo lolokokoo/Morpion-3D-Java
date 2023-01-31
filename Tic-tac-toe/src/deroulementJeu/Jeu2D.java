@@ -13,10 +13,10 @@ public class Jeu2D implements Jeu{
 	public Jeu2D(Grille2D grille) {
 		this.grille = grille;
 	}
-	
+	@Override
 	public void deroulementJeu() {
 		//On continue de jouer tant que la grille est pas pleine ou que personne n'a gagné
-		while (this.checkWin() == false && !grille.estPlein()) {
+		while (!this.checkWin() && !grille.estPlein()) {
 			grille.afficherGrille();
 			while (!this.demandePositionPion()) { //Si le pion est pas valide on redemande
 				this.demandePositionPion();
@@ -26,7 +26,7 @@ public class Jeu2D implements Jeu{
 		System.out.println(message);
 	}
 	
-	
+	@Override
 	public boolean demandePositionPion() {
 	    System.out.println(currentplayer.getUsername() + ", où voulez-vous placer votre pion ? (entrez un numéro de case entre 1 et 9)");
 	    System.out.println("Votre symbole : " + currentplayer.getSymbole());
@@ -47,8 +47,8 @@ public class Jeu2D implements Jeu{
 	    } 
 	}
 
-	
-	private boolean checkWin() {
+	@Override
+	public boolean checkWin() {
 		if(this.checkWinHoriz() || this.checkWinVert() || this.checkWinDiag()) {
 			return true;
 		}
@@ -56,8 +56,8 @@ public class Jeu2D implements Jeu{
 	    currentplayer = currentplayer == joueur1 ? joueur2 : joueur1;
 		return false;
 	}
-
-	private boolean checkWinDiag() {
+	@Override
+	public boolean checkWinDiag() {
 		int check = 0;
 		//Diagonale haut-gauche to bas-droite
 		for (int indice = 0; indice < this.grille.getTaille(); indice++) {
@@ -80,8 +80,8 @@ public class Jeu2D implements Jeu{
 		}
 		return false;
 	}
-
-	private boolean checkWinVert() {
+	@Override
+	public boolean checkWinVert() {
 		for (int ligne = 0; ligne < this.grille.getTaille(); ligne++) {
             int check = 0;
             for (int colonne = 0; colonne < this.grille.getTaille(); colonne++) {
@@ -95,8 +95,8 @@ public class Jeu2D implements Jeu{
         }
         return false;
     }
-
-	private boolean checkWinHoriz() {
+	@Override
+	public boolean checkWinHoriz() {
 		for (int colonne = 0; colonne < this.grille.getTaille(); colonne++) {
             int check = 0;
             for (int ligne = 0; ligne < this.grille.getTaille(); ligne++) {
