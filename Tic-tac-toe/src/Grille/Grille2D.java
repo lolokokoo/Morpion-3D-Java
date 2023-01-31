@@ -1,4 +1,6 @@
 package Grille;
+import java.util.Scanner;
+
 import jeucommun.Joueur;
 
 public class Grille2D implements Grille{
@@ -57,6 +59,22 @@ public class Grille2D implements Grille{
 		}	
 	}
 	
+	//remplace la case par un ?
+	public void afficherGrilleConfirm(int ligne_pion, int colonne_pion) {
+		for(int n = 0; n < this.taille; n++) {
+			System.out.print("| ");
+			for(int m = 0; m < this.taille; m++) {
+				if (m == ligne_pion && n == colonne_pion) {
+					System.out.print("?");
+				}
+				else {
+					System.out.print(this.mat[m][n]);	
+				}
+				System.out.print(" ");
+			}
+			System.out.println("|");
+		}	
+	}
 	public void setCase(String symbole, int... coordinates) {
 		int ligne = coordinates[0];
         int colonne = coordinates[1];
@@ -78,7 +96,7 @@ public class Grille2D implements Grille{
 	    return stock == this.getTaille() * this.getTaille();
 	}
 	
-	public void placerPion(int chiffre, Joueur currentplayer) {
+	public boolean placerPion(int chiffre, Joueur currentplayer) {
 	    if (chiffre < 1 || chiffre > this.taille * this.taille) {
 	        throw new IllegalArgumentException("Le chiffre doit être compris entre 1 et " + this.taille * this.taille);
 	    }
@@ -87,7 +105,27 @@ public class Grille2D implements Grille{
 	    if (!(this.getCase(ligne, colonne).equals(Integer.toString(chiffre)))) {
 	        throw new IllegalArgumentException("La case " + chiffre + " est déjà occupée");
 	    }
-	    this.setCase(currentplayer.getSymbole(), ligne, colonne);
+	  //On demande la confirmation
+	    Scanner scan = new Scanner(System.in);
+	    boolean verif = false;
+	    afficherGrilleConfirm(ligne, colonne);
+	    do {
+	    	try {
+	    		System.out.println("Tapez 1 pour confirmer, 2 pour annuler");
+				int confirm = scan.nextInt();
+				if (confirm == 1) {
+					this.setCase(currentplayer.getSymbole(), ligne, colonne);
+					return true;
+				}
+				else {
+					return false;
+				}
+	    	}catch (Exception e) {
+				scan.nextLine();
+	    	}
+	    }while (verif == false);
+	    scan.close();
+	    return false;
 	}
 	
 	

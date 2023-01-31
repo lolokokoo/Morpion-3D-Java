@@ -1,5 +1,6 @@
 package Grille;
 import jeucommun.Joueur;
+import java.util.Scanner;
 
 public class Grille3D implements Grille{
     private int taille;
@@ -70,6 +71,46 @@ public class Grille3D implements Grille{
     	}
 	}
 	
+	//remplace la case par un ?
+	public void afficherGrilleConfirm(int ligne_pion, int colonne_pion, int profondeur_pion) {
+		int espace = 0;
+		while (espace < taille/2 -1) {
+			System.out.print(" ");
+			espace++;
+		}
+		System.out.print("      ");
+		for (int i = 0; i <taille; i++) {
+			char c = (char) (i + 'a');
+			String s = Character.toString(c);
+			System.out.print(s);
+			espace = 0;
+			while (espace < taille*4) {
+				System.out.print(" ");
+				espace++;
+			}
+		}
+		System.out.println("");
+		//On affiche les n grilles
+		for (int ligne = 0; ligne < taille; ligne++) {
+			
+			for (int profondeur = 0; profondeur < taille; profondeur++) {
+				System.out.print("|  ");
+				for (int colonne = 0; colonne < taille; colonne++) {
+					if (ligne == ligne_pion && colonne == colonne_pion && profondeur == profondeur_pion) {
+						System.out.print("?");
+					}
+					else {
+						System.out.print(this.cube[ligne][colonne][profondeur]);	
+					}
+					System.out.print("  ");
+		    	}
+				System.out.print("|");
+	    	}
+			
+			System.out.println();
+    	}
+	}
+	
 	public String getCase(int... coordinates) {
 		int ligne = coordinates[0];
         int colonne = coordinates[1];
@@ -90,7 +131,7 @@ public class Grille3D implements Grille{
 	    cube[ligne][colonne][profondeur] = symbole;
 	}
 	
-	public void placerPion(int chiffre, String lettre, Joueur currentplayer) { 
+	public boolean placerPion(int chiffre, String lettre, Joueur currentplayer) { 
 		char charVar = lettre.charAt(0);
 	    int profondeur = charVar - 'a' ; // profondeur = 0 si a, 1 si b, 2 si c ...
 	    if (chiffre < 1 || chiffre > this.taille * this.taille || profondeur < 0 || profondeur > this.taille - 1) {
@@ -101,7 +142,27 @@ public class Grille3D implements Grille{
 	    if (!(this.getCase(ligne, colonne, profondeur).equals(Integer.toString(chiffre)))) {
 	        throw new IllegalArgumentException("La case " + chiffre + " est déjà occupée");
 	    }
-	    this.setCase(currentplayer.getSymbole(), ligne, colonne, profondeur);
+	    //On demande la confirmation
+	    Scanner scan = new Scanner(System.in);
+	    boolean verif = false;
+	    afficherGrilleConfirm(ligne, colonne, profondeur);
+	    do {
+	    	try {
+	    		System.out.println("Tapez 1 pour confirmer, 2 pour annuler");
+				int confirm = scan.nextInt();
+				if (confirm == 1) {
+					this.setCase(currentplayer.getSymbole(), ligne, colonne, profondeur);
+					return true;
+				}
+				else {
+					return false;
+				}
+	    	}catch (Exception e) {
+				scan.nextLine();
+	    	}
+	    }while (verif == false);
+	    scan.close();
+	    return false;
 	}
 	
 	@Override

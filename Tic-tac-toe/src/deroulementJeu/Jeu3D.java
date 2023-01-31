@@ -10,7 +10,7 @@ public class Jeu3D implements Jeu{
 	private Grille3D grille;
 	Joueur joueur1 = new Joueur("X", "Joueur 1");
 	Joueur joueur2 = new Joueur("O", "Joueur 2");
-	Joueur currentplayer = joueur2;
+	Joueur currentplayer = joueur1;
 	Scanner scan = new Scanner(System.in);
 
 	public Jeu3D(Grille3D grille) {
@@ -22,7 +22,13 @@ public class Jeu3D implements Jeu{
 			while (!this.demandePositionPion()) { //Si le pion est pas valide on redemande
 				this.demandePositionPion();
 			}
+			if(!this.checkWin()) {
+				currentplayer = currentplayer == joueur1 ? joueur2 : joueur1;
+			}
 		}
+		grille.afficherGrille();
+		String message = this.checkWin() ? "Bravo " + currentplayer.getUsername() : "La grille est pleine, égalité !";
+		System.out.println(message);
 	}
 	@Override
 	public boolean demandePositionPion() {
@@ -34,7 +40,9 @@ public class Jeu3D implements Jeu{
 	        String lettre = String.valueOf(position.charAt(0)); //On récupére la lettre sous forme de String
 	        int nombre = Integer.parseInt(position.substring(1)); //On récupére le nombre
 	        try {
-	            grille.placerPion(nombre, lettre, currentplayer);
+	            if (!grille.placerPion(nombre, lettre, currentplayer)) {
+	            	return false;
+	            }
 	            return true;
 	        } catch (Exception e) {
 	        	grille.afficherGrille();
@@ -52,8 +60,6 @@ public class Jeu3D implements Jeu{
 		if(this.checkWinHoriz() || this.checkWinVert() || this.checkWinDiag()) {
 			return true;
 		}
-	    // changer de joueur si personne ne gagne
-	    currentplayer = currentplayer == joueur1 ? joueur2 : joueur1;
 		return false;
 	}
 	

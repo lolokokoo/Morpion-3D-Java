@@ -7,7 +7,7 @@ public class Jeu2D implements Jeu{
 	private Grille2D grille;
 	Joueur joueur1 = new Joueur("X", "Joueur 1");
 	Joueur joueur2 = new Joueur("O", "Joueur 2");
-	Joueur currentplayer = joueur2;
+	Joueur currentplayer = joueur1;
     Scanner scan = new Scanner(System.in);
 	
 	public Jeu2D(Grille2D grille) {
@@ -18,10 +18,16 @@ public class Jeu2D implements Jeu{
 		//On continue de jouer tant que la grille est pas pleine ou que personne n'a gagné
 		while (!this.checkWin() && !grille.estPlein()) {
 			grille.afficherGrille();
-			while (!this.demandePositionPion()) { //Si le pion est pas valide on redemande
-				this.demandePositionPion();
+			System.out.println("test1");
+			boolean valider_placement = false;
+			while (!valider_placement) { //Si le pion est pas valide on redemande
+				valider_placement = this.demandePositionPion();	
+			}
+			if(!this.checkWin()) {
+				currentplayer = currentplayer == joueur1 ? joueur2 : joueur1;
 			}
 		}
+		grille.afficherGrille();
 		String message = this.checkWin() ? "Bravo " + currentplayer.getUsername() : "La grille est pleine, égalité !";
 		System.out.println(message);
 	}
@@ -33,16 +39,21 @@ public class Jeu2D implements Jeu{
 	    try {
 	        int position = scan.nextInt();
 	        try {
-	            grille.placerPion(position, currentplayer);
+	        	if (!grille.placerPion(position, currentplayer)) {
+	        		grille.afficherGrille();
+	        		return false;
+	        	}
 	            return true;
 	        } catch (Exception e) {
 	        	grille.afficherGrille();
 	            System.out.println("La case est déjà utilisée ou invalide, veuillez réessayer.");
+	            scan.nextLine();
 	            return false;
 	        }
 	    } catch (Exception e) {
         	grille.afficherGrille();
 	        System.out.println("Veuillez entrer un entier s'il vous plaît.");
+	        scan.nextLine();
 	        return false;
 	    } 
 	}
@@ -52,8 +63,6 @@ public class Jeu2D implements Jeu{
 		if(this.checkWinHoriz() || this.checkWinVert() || this.checkWinDiag()) {
 			return true;
 		}
-	    // changer de joueur si personne ne gagne
-	    currentplayer = currentplayer == joueur1 ? joueur2 : joueur1;
 		return false;
 	}
 	@Override
