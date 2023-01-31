@@ -5,6 +5,7 @@ import jeucommun.Joueur;
 
 public class Jeu2D implements Jeu{
 	private Grille2D grille;
+
 	Joueur joueur1 = new Joueur("X", "Joueur 1");
 	Joueur joueur2 = new Joueur("O", "Joueur 2");
 	Joueur currentplayer = joueur1;
@@ -13,12 +14,12 @@ public class Jeu2D implements Jeu{
 	public Jeu2D(Grille2D grille) {
 		this.grille = grille;
 	}
+	
 	@Override
 	public void deroulementJeu() {
 		//On continue de jouer tant que la grille est pas pleine ou que personne n'a gagné
 		while (!this.checkWin() && !grille.estPlein()) {
 			grille.afficherGrille();
-			System.out.println("test1");
 			boolean valider_placement = false;
 			while (!valider_placement) { //Si le pion est pas valide on redemande
 				valider_placement = this.demandePositionPion();	
@@ -69,8 +70,8 @@ public class Jeu2D implements Jeu{
 	public boolean checkWinDiag() {
 		int check = 0;
 		//Diagonale haut-gauche to bas-droite
-		for (int indice = 0; indice < this.grille.getTaille(); indice++) {
-			if (currentplayer.getSymbole().equals(this.grille.getCase(indice, indice))) {
+	 	for (int indice = 0; indice < this.grille.getTaille(); indice++) {
+			if (currentplayer.getSymbole().equals(grille.getCase(indice, indice))) {
                 check++; // On compte combien de symboles à la suite il y a
             }
             if (check == this.grille.getTaille()) {
@@ -84,6 +85,7 @@ public class Jeu2D implements Jeu{
                 check++; // On compte combien de symboles à la suite il y a
             }
             if (check == this.grille.getTaille()) {
+            	
                 return true;
             }
 		}

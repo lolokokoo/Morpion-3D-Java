@@ -24,18 +24,7 @@ public class Grille3D implements Grille{
 		return taille;
 	}
 
-	public void setTaille(int taille) {
-		this.taille = taille;
-	}
-
-	public String[][][] getCube() {
-		return cube;
-	}
-
-	public void setCube(String[][][] cube) {
-		this.cube = cube;
-	}
-	
+	@Override
 	public void afficherGrille() {
 		//On affiche les lettre correspondant aux num des grilles
 		int espace = 0;
@@ -72,7 +61,11 @@ public class Grille3D implements Grille{
 	}
 	
 	//remplace la case par un ?
-	public void afficherGrilleConfirm(int ligne_pion, int colonne_pion, int profondeur_pion) {
+	@Override
+	public void afficherGrilleConfirm(int... coordinates) {
+		int ligne_pion = coordinates[0];
+        int colonne_pion = coordinates[1];
+        int profondeur_pion = coordinates[2];
 		int espace = 0;
 		while (espace < taille/2 -1) {
 			System.out.print(" ");
@@ -110,7 +103,7 @@ public class Grille3D implements Grille{
 			System.out.println();
     	}
 	}
-	
+	@Override
 	public String getCase(int... coordinates) {
 		int ligne = coordinates[0];
         int colonne = coordinates[1];
@@ -120,7 +113,7 @@ public class Grille3D implements Grille{
 	    }
 	    return this.cube[ligne][colonne][profondeur];
 	}
-	
+	@Override
 	public void setCase(String symbole, int... coordinates) {
 		int ligne = coordinates[0];
         int colonne = coordinates[1];
@@ -179,5 +172,7 @@ public class Grille3D implements Grille{
 	    }
 	    return stock == this.getTaille() * this.getTaille() * this.getTaille();
 	}
+
+	
 }
 

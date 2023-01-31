@@ -1,5 +1,4 @@
 package deroulementJeu;
-
 import java.util.Scanner;
 
 import Grille.Grille3D;
@@ -16,6 +15,7 @@ public class Jeu3D implements Jeu{
 	public Jeu3D(Grille3D grille) {
 		this.grille = grille;
 	}
+	
 	@Override
 	public void deroulementJeu() {
 		while (!grille.estPlein() && !this.checkWin()) {

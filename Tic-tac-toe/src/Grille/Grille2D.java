@@ -1,6 +1,5 @@
 package Grille;
 import java.util.Scanner;
-
 import jeucommun.Joueur;
 
 public class Grille2D implements Grille{
@@ -10,23 +9,17 @@ public class Grille2D implements Grille{
 	public Grille2D (int taille) {
 		this.taille = taille;
 		this.mat = new String[this.taille][this.taille];
-		this.creerMatrice();		
+		int i = 1;
+		for(int n = 0; n < this.taille; n++) {
+			for(int m = 0; m < this.taille; m++) {
+				this.mat[m][n] = Integer.toString(i);
+				i += 1;
+			}
+		}	
 	}
 	
 	public int getTaille() {
 		return taille;
-	}
-
-	public void setTaille(int taille) {
-		this.taille = taille;
-	}
-
-	public String[][] getMat() {
-		return mat;
-	}
-
-	public void setMat(String[][] mat) {
-		this.mat = mat;
 	}
 	
 	public String getCase(int... coordinates) {
@@ -37,17 +30,8 @@ public class Grille2D implements Grille{
 	    }
 	    return this.mat[ligne][colonne];
 	}
-	
-	private void creerMatrice() {
-		int i = 1;
-		for(int n = 0; n < this.taille; n++) {
-			for(int m = 0; m < this.taille; m++) {
-				this.mat[m][n] = Integer.toString(i);
-				i += 1;
-			}
-		}
-	}
 
+	@Override
 	public void afficherGrille() {
 		for(int n = 0; n < this.taille; n++) {
 			System.out.print("| ");
@@ -60,7 +44,10 @@ public class Grille2D implements Grille{
 	}
 	
 	//remplace la case par un ?
-	public void afficherGrilleConfirm(int ligne_pion, int colonne_pion) {
+	@Override
+	public void afficherGrilleConfirm(int... coordinates) {
+		int ligne_pion = coordinates[0];
+        int colonne_pion = coordinates[1];
 		for(int n = 0; n < this.taille; n++) {
 			System.out.print("| ");
 			for(int m = 0; m < this.taille; m++) {
@@ -75,13 +62,14 @@ public class Grille2D implements Grille{
 			System.out.println("|");
 		}	
 	}
+	@Override
 	public void setCase(String symbole, int... coordinates) {
 		int ligne = coordinates[0];
         int colonne = coordinates[1];
 	    if (ligne < 0 || ligne >= this.taille || colonne < 0 || colonne >= this.taille) {
 	        throw new IllegalArgumentException("Les indices de ligne et colonne doivent être compris entre 0 et " + (this.taille - 1));
 	    }
-	    mat[ligne][colonne] = symbole;
+	    this.mat[ligne][colonne] = symbole;
 	}
 	
 	public boolean estPlein() {
@@ -105,7 +93,7 @@ public class Grille2D implements Grille{
 	    if (!(this.getCase(ligne, colonne).equals(Integer.toString(chiffre)))) {
 	        throw new IllegalArgumentException("La case " + chiffre + " est déjà occupée");
 	    }
-	  //On demande la confirmation
+	    //On demande la confirmation
 	    Scanner scan = new Scanner(System.in);
 	    boolean verif = false;
 	    afficherGrilleConfirm(ligne, colonne);

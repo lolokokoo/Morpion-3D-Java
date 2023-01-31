@@ -2,7 +2,8 @@ package Grille;
 
 public interface Grille {
 	public void afficherGrille();
-	String getCase(int... coordinates);
-	void setCase(String symbole, int... coordinates);
+	public void afficherGrilleConfirm(int... coordinates);
+	public String getCase(int... coordinates);
+	public void setCase(String symbole, int... coordinates);
 	public boolean estPlein();
 }
