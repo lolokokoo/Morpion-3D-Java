@@ -14,6 +14,9 @@ public class Jeu2D implements Jeu{
 	Joueur currentplayer = joueur1;
     Scanner scan = new Scanner(System.in);
 	
+    /**
+	 * @param grille grille2D
+	 */
 	public Jeu2D(Grille2D grille) {
 		this.grille = grille;
 	}

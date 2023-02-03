@@ -9,6 +9,10 @@ import deroulementJeu.*;
  * - Choix entre 2D et 3D par l'utilisateur
  */
 public class Main {
+	/**
+	 * fonction main
+	 * @param args arguments du main
+	 */
 	public static void main(String[] args) {
 		Scanner scan_choix_jeu = new Scanner(System.in);
 		boolean jeu_fini = false;

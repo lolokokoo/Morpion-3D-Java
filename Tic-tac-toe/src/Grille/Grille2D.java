@@ -26,6 +26,10 @@ public class Grille2D implements Grille{
 		}	
 	}
 	
+	/**
+	 * 
+	 * @return taille de la grille
+	 */
 	public int getTaille() {
 		return taille;
 	}

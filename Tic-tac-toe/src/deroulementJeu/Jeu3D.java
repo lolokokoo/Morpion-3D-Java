@@ -15,7 +15,9 @@ public class Jeu3D implements Jeu{
 	Joueur joueur2 = new Joueur("O", "Joueur 2");
 	Joueur currentplayer = joueur1;
 	Scanner scan = new Scanner(System.in);
-
+	/**
+	 * @param grille grille3D
+	 */
 	public Jeu3D(Grille3D grille) {
 		this.grille = grille;
 	}

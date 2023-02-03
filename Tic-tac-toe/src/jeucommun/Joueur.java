@@ -9,18 +9,26 @@ public class Joueur {
 
 /**
  * Constructeur spécifique :
- * @param symbole
- * @param username
+ * @param symbole symbole du joueur
+ * @param username identifiant pour diférencier les joueurs
  */
 	public Joueur(String symbole, String username) {
 		this.symbole = symbole;
 		this.username = username;
 	}
 	
+	/**
+	 * 
+	 * @return retourne le username
+	 */
 	public String getUsername() {
 		return username;
 	}
 
+	/**
+	 * 
+	 * @return retourne le symbole
+	 */
 	public String getSymbole() {
 		return symbole;
 	}
