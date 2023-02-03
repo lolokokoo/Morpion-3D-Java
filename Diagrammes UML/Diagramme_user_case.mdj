@@ -261,7 +261,7 @@
 											"top": 223,
 											"width": 391,
 											"height": 13,
-											"text": "UseCaseSubject1"
+											"text": "TICTACTOE 3D"
 										},
 										{
 											"_type": "LabelView",
@@ -1612,7 +1612,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGGF7AQbg6hYFQ="
 					},
-					"name": "UseCaseSubject1"
+					"name": "TICTACTOE 3D"
 				},
 				{
 					"_type": "UMLUseCase",
