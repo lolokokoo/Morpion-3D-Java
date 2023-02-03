@@ -3,6 +3,9 @@ import java.util.Scanner;
 import Grille.Grille2D;
 import jeucommun.Joueur;
 
+/**
+ * Gestion du jeu 2D
+ */
 public class Jeu2D implements Jeu{
 	private Grille2D grille;
 
@@ -16,6 +19,9 @@ public class Jeu2D implements Jeu{
 	}
 	
 	@Override
+	/**
+	 * La fonction principale qui permet de jouer au morpion.
+	 */
 	public void deroulementJeu() {
 		//On continue de jouer tant que la grille est pas pleine ou que personne n'a gagné
 		while (!this.checkWin() && !grille.estPlein()) {
@@ -34,6 +40,10 @@ public class Jeu2D implements Jeu{
 	}
 	
 	@Override
+	/**
+	 * Vérifie les coordoonees rentrer par le joueur
+	 * @return true si le pion est placable sinon false
+	 */
 	public boolean demandePositionPion() {
 	    System.out.println(currentplayer.getUsername() + ", où voulez-vous placer votre pion ? (entrez un numéro de case entre 1 et 9)");
 	    System.out.println("Votre symbole : " + currentplayer.getSymbole());
@@ -60,6 +70,10 @@ public class Jeu2D implements Jeu{
 	}
 
 	@Override
+	/**
+	 * Appelle les trois checkwin
+	 * @return true si un des trois checkwin retourne true
+	 */
 	public boolean checkWin() {
 		if(this.checkWinHoriz() || this.checkWinVert() || this.checkWinDiag()) {
 			return true;
@@ -67,6 +81,10 @@ public class Jeu2D implements Jeu{
 		return false;
 	}
 	@Override
+	/**
+	 * Permet de regerder toute les diagonales pour voir si il y a un vainqueur.
+	 * @return true si il existe une combinaison gagnante sur une diagonale sinon false
+	 */
 	public boolean checkWinDiag() {
 		int check = 0;
 		//Diagonale haut-gauche to bas-droite
@@ -92,6 +110,10 @@ public class Jeu2D implements Jeu{
 		return false;
 	}
 	@Override
+	/**
+	 * Permet de regerder toute les colonnes pour voir si il y a un vainqueur.
+	 * @return true si il existe une combinaison gagnante à la verticale sinon false
+	 */
 	public boolean checkWinVert() {
 		for (int ligne = 0; ligne < this.grille.getTaille(); ligne++) {
             int check = 0;
@@ -107,6 +129,10 @@ public class Jeu2D implements Jeu{
         return false;
     }
 	@Override
+	/**
+	 * Permet de regerder toute les lignes pour voir si il y a un vainqueur.
+	 * @return true si il existe une combinaison gagnante en horizontale sinon false
+	 */
 	public boolean checkWinHoriz() {
 		for (int colonne = 0; colonne < this.grille.getTaille(); colonne++) {
             int check = 0;

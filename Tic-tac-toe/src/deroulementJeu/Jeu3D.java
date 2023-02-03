@@ -4,6 +4,10 @@ import java.util.Scanner;
 import Grille.Grille3D;
 import jeucommun.Joueur;
 
+/**
+ * Gestion du jeu 3D
+ *
+ */
 public class Jeu3D implements Jeu{
 
 	private Grille3D grille;
@@ -17,6 +21,9 @@ public class Jeu3D implements Jeu{
 	}
 	
 	@Override
+	/**
+	 * La fonction principale qui permet de jouer au morpion.
+	 */
 	public void deroulementJeu() {
 		while (!grille.estPlein() && !this.checkWin()) {
 			while (!this.demandePositionPion()) { //Si le pion est pas valide on redemande
@@ -31,6 +38,10 @@ public class Jeu3D implements Jeu{
 		System.out.println(message);
 	}
 	@Override
+	/**
+	 * Vérifie les coordoonees rentrer par le joueur
+	 * @return true si le pion est placable sinon false
+	 */
 	public boolean demandePositionPion() {
 		grille.afficherGrille();
 	    System.out.println(currentplayer.getUsername() + ", où voulez-vous placer votre pion ? Par exemple a1 ");
@@ -56,6 +67,10 @@ public class Jeu3D implements Jeu{
 	    } 
 	}
 	@Override
+	/**
+	 * Appelle les trois checkwin
+	 * @return true si un des trois checkwin retourne true
+	 */
 	public boolean checkWin() {
 		if(this.checkWinHoriz() || this.checkWinVert() || this.checkWinDiag()) {
 			return true;
@@ -64,6 +79,10 @@ public class Jeu3D implements Jeu{
 	}
 	
 	@Override
+	/**
+	 * Permet de regerder toute les colonnes pour voir si il y a un vainqueur.
+	 * @return true si il existe une combinaison gagnante à la verticale sinon false
+	 */
 	public boolean checkWinVert() {
 		//On vérfie sur chacunes de faces 2D
 		for (int profondeur = 0; profondeur < this.grille.getTaille(); profondeur++) {
@@ -96,6 +115,10 @@ public class Jeu3D implements Jeu{
 		return false;
     }
 	@Override
+	/**
+	 * Permet de regerder toute les lignes pour voir si il y a un vainqueur.
+	 * @return true si il existe une combinaison gagnante en horizontale sinon false
+	 */
 	public boolean checkWinHoriz() {
 		//On vérfie sur chacunes de faces 2D
 		for (int profondeur = 0; profondeur < this.grille.getTaille(); profondeur++) {
@@ -115,6 +138,10 @@ public class Jeu3D implements Jeu{
 		return false;
 	}
 	@Override
+	/**
+	 * Permet de regerder toute les diagonales pour voir si il y a un vainqueur.
+	 * @return true si il existe une combinaison gagnante sur une diagonale sinon false
+	 */
 	public boolean checkWinDiag() {
 		//On vérfie sur chacunes de faces 2D
 		for (int profondeur = 0; profondeur < this.grille.getTaille(); profondeur++) {

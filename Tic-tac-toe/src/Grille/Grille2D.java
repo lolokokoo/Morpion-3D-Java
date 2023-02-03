@@ -2,10 +2,18 @@ package Grille;
 import java.util.Scanner;
 import jeucommun.Joueur;
 
+/**
+ *	Generation d'une grille 2D avec l'interface grille
+ */
+
 public class Grille2D implements Grille{
 	private int taille;
 	private String[][] mat;
 	
+	/**
+     * creation de la grille 3D
+     * @param taille taille
+     */
 	public Grille2D (int taille) {
 		this.taille = taille;
 		this.mat = new String[this.taille][this.taille];
@@ -32,6 +40,9 @@ public class Grille2D implements Grille{
 	}
 
 	@Override
+	/**
+     * Affichage de la grille
+     */
 	public void afficherGrille() {
 		for(int n = 0; n < this.taille; n++) {
 			System.out.print("| ");
@@ -45,6 +56,10 @@ public class Grille2D implements Grille{
 	
 	//remplace la case par un ?
 	@Override
+	/**
+	 * Affichage de la grille apres la décision du joueur avec un
+	 * point d'interogation la ou il veut jouer son pion
+	 */
 	public void afficherGrilleConfirm(int... coordinates) {
 		int ligne_pion = coordinates[0];
         int colonne_pion = coordinates[1];
@@ -72,6 +87,9 @@ public class Grille2D implements Grille{
 	    this.mat[ligne][colonne] = symbole;
 	}
 	
+	/**
+	 * verifie la si la grille est pleine.
+	 */
 	public boolean estPlein() {
 	    int stock = 0;
 	    for (int ligne = 0; ligne < this.taille; ligne++) {
@@ -84,6 +102,12 @@ public class Grille2D implements Grille{
 	    return stock == this.getTaille() * this.getTaille();
 	}
 	
+	/**
+	 * Place le pion du joueur courrant au coordonnee chiffre lettre
+	 * @param chiffre coordonnee
+	 * @param currentplayer joueuer courrant
+	 * @return retoune faux si le piont n'est pas placable
+	 */
 	public boolean placerPion(int chiffre, Joueur currentplayer) {
 	    if (chiffre < 1 || chiffre > this.taille * this.taille) {
 	        throw new IllegalArgumentException("Le chiffre doit être compris entre 1 et " + this.taille * this.taille);

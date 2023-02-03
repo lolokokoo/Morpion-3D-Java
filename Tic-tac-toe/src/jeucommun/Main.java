@@ -3,6 +3,11 @@ import Grille.*;
 import java.util.Scanner;
 import deroulementJeu.*;
 
+/**
+ * Permet le lancement de la partie :
+ * - Choix de la taille de la grille par l'utilisateur
+ * - Choix entre 2D et 3D par l'utilisateur
+ */
 public class Main {
 	public static void main(String[] args) {
 		Scanner scan_choix_jeu = new Scanner(System.in);

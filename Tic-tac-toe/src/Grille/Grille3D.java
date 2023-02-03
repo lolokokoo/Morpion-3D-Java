@@ -2,10 +2,17 @@ package Grille;
 import jeucommun.Joueur;
 import java.util.Scanner;
 
+/**
+ *	Generation d'une grille 3D avec l'interface grille
+ */
 public class Grille3D implements Grille{
     private int taille;
     private String[][][] cube;
 
+    /**
+     * creation de la grille 3D
+     * @param taille taille
+     */
     public Grille3D(int taille) {
     	this.taille = taille;
     	this.cube = new String[taille][taille][taille];
@@ -24,6 +31,9 @@ public class Grille3D implements Grille{
 		return taille;
 	}
 
+    /**
+     * Affichage de la grille
+     */
 	@Override
 	public void afficherGrille() {
 		//On affiche les lettre correspondant aux num des grilles
@@ -60,6 +70,10 @@ public class Grille3D implements Grille{
     	}
 	}
 	
+	/**
+	 * Affichage de la grille apres la décision du joueur avec un
+	 * point d'interogation la ou il veut jouer son pion
+	 */
 	//remplace la case par un ?
 	@Override
 	public void afficherGrilleConfirm(int... coordinates) {
@@ -124,6 +138,13 @@ public class Grille3D implements Grille{
 	    cube[ligne][colonne][profondeur] = symbole;
 	}
 	
+	/**
+	 * Place le pion du joueur courrant au coordonnee chiffre lettre
+	 * @param chiffre premiere coordonnee
+	 * @param lettre deuxieme coordonnee
+	 * @param currentplayer joueuer courrant
+	 * @return retoune faux si le piont n'est pas placable
+	 */
 	public boolean placerPion(int chiffre, String lettre, Joueur currentplayer) { 
 		char charVar = lettre.charAt(0);
 	    int profondeur = charVar - 'a' ; // profondeur = 0 si a, 1 si b, 2 si c ...
@@ -159,6 +180,9 @@ public class Grille3D implements Grille{
 	}
 	
 	@Override
+	/**
+	 * verifie la si la grille est pleine.
+	 */
 	public boolean estPlein() {
 	    int stock = 0;
 	    for (int ligne = 0; ligne < this.taille; ligne++) {
